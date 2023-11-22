@@ -3,10 +3,13 @@ import {getFirestore} from "firebase/firestore";
 import {createContext, useContext} from "react";
 import {firebaseConfig} from "../firebase.config";
 import {makeAutoObservable} from "mobx";
-
+import {EventStore} from "./event-store";
+import { EventService } from "../services/event.service";
 
 export class RootStore {
-  
+  eventStore: EventStore;
+  eventService: EventService;
+
   constructor() {
     makeAutoObservable(this);
 
@@ -14,7 +17,8 @@ export class RootStore {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const db = getFirestore(app);
-
+    this.eventService = new EventService( this, db );
+    this.eventStore = new EventStore(this);
   }
 }
 

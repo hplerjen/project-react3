@@ -3,9 +3,9 @@ export class Event2  {
   title: string;
   description: string;
 
-  constructor(data : Event2) {
-    this.id = data.id;
-    this.title = data.title;
-    this.description = data.description;
+  constructor(event : Event2) {
+    this.id = event.id;
+    this.title = event.title;
+    this.description = event.description;
   }
 }
