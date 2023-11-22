@@ -1,12 +1,13 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import styles from './app.module.scss';
 
-import NxWelcome from './nx-welcome';
+import EventList from './pages/event-list';
+
 
 export function App() {
   return (
     <div>
-      <NxWelcome title="project-react3" />
+      <EventList />
     </div>
   );
 }
