@@ -1,16 +1,17 @@
 import { Logo } from "./logo";
-import { Link } from "react-router-dom";
 
+type HeadingProps = { title: string};
 
-export const Header = () => {
+export const Header = (props: HeadingProps) => {
 
   return (
     <div className="header">
-      <div className="flex-auto">
-        <Link to="/">
-          <Logo width="200" />
-        </Link>
-      </div>
+            <div className="flex-auto">
+                {props.title}
+            </div>
+            <div className="flex-auto">
+                <Logo></Logo>
+          </div>
     </div>
   );
 };

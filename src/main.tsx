@@ -2,8 +2,6 @@ import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 
 import App from './app/app';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import EventList from './app/pages/event-list';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
