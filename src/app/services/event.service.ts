@@ -5,7 +5,6 @@ import { RootStore } from "../state/root-store";
 export class EventService {
   private collectionName = "events2";
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public constructor(private rootStore: RootStore, protected db: Firestore) {
     
   }
@@ -16,7 +15,7 @@ export class EventService {
 
   async collectionQuery(...queryConstraints: QueryConstraint[]) {
     const baseCollection = this.collection;
-    return await query(
+    return await query<EventDto, EventDto>(
         baseCollection,
         ...queryConstraints
     );
@@ -42,13 +41,8 @@ export class EventService {
   async getDocs(){
     const q = query(this.collection);
     const querySnapshot = await getDocs(q);
-    const data = this.wrapReturnKeyMap(querySnapshot);
-    //FIXME this.rootStore.eventStore.add(data);
-    return data;
-}  
-  //REM code from Michael 
-  private wrapReturnKeyMap(querySnapshot: QuerySnapshot<EventDto>) {
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    return querySnapshot.docs.map((doc) => ({ id: doc.id, ...(doc.data() as  {}) }));
-  }
+    const events = new Array <EventDto>;
+    querySnapshot.docs.map((doc) => (events.push(new EventDto({id: doc.id, ...doc.data()}))));
+    this.rootStore.eventStore.add(events);
+} 
 }

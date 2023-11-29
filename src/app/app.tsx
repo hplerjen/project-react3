@@ -1,24 +1,42 @@
+import { EventList } from "./components/event/event-list";
+import ProductList from "./components/product/product-list";
+import { RootStore, StoreRootProvider } from "./state/root-store";
+import { observer } from "mobx-react-lite";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { Layout } from "./pages/layout";
+import { EventDetail } from "./components/event/event-detail";
+import { ProductDetail } from "./components/product/product-detail";
 
-//import styles from './app.module.scss';
+const AppObserver = observer(() => {
 
-import { Header } from './components/header';
-import {EventList} from './components/event/event-list';
-import ProductList from './components/product/product-list';
-import Counter  from './components/counter';
-import { useState } from 'react';
-import List from './components/list';
-
-export function App() {
-  const [counter, setCounter] = useState<number>(1);
   return (
-    <div>
-      <Header title={"Project2"} />
-      <EventList />
-      <ProductList />
-      <Counter setCounter={setCounter}>Counter is {counter}</Counter>
-      <List items = {["Coffee", "Tacos", "Burger"]} render={(item: string) => <span className="bold">{item}</span>}/>
+    <div className="App">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Navigate to="events" />} />
+            <Route path="events" element={<EventList />}>
+              <Route path=":id" element={<EventDetail />} />
+            </Route>
+             <Route path="products" element={<ProductList />}>
+              <Route path=":id" element={<ProductDetail />} />
+            </Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
+});
+
+function App({ rootStore }: { rootStore: RootStore }) {
+  if (rootStore) {
+    return (
+      <StoreRootProvider value={rootStore}>
+        <AppObserver />
+      </StoreRootProvider>
+    );
+  }
+  return <>MISSING ROOTSTORE</>;
 }
 
 export default App;
