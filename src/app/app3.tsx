@@ -8,7 +8,7 @@ export function App3() {
       <div className="App">
         <Header title={"Project2"} />
         <EventList />
-        <ProductList />*/
+        <ProductList />
     </div>
     );
   }

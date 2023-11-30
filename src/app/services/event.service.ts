@@ -41,8 +41,7 @@ export class EventService {
   async getDocs(){
     const q = query(this.collection);
     const querySnapshot = await getDocs(q);
-    const events = new Array <EventDto>;
-    querySnapshot.docs.map((doc) => (events.push(new EventDto({id: doc.id, ...doc.data()}))));
+    const events = querySnapshot.docs.map((doc) => (new EventDto({id: doc.id, ...doc.data()})));
     this.rootStore.eventStore.add(events);
 } 
 }

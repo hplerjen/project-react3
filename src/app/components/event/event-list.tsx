@@ -1,5 +1,6 @@
 export interface EventListProps {}
 
+
 export function EventList(props: EventListProps) {
   
   const events = [ 
